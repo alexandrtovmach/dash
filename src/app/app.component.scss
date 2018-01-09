@@ -1,0 +1,212 @@
+.inline-flatpickr .form-control, .flatpickr-calendar.arrowTop:before, .flatpickr-calendar.arrowTop:after { display: none; }
+
+
+.flatpickr-prev-month, .flatpickr-next-month {
+  line-height: 36px;
+}
+
+.flatpickr-month {
+  padding: 10px 0px;
+  height: 36px;
+}
+
+.left-panel {
+  background: #fff;
+  /* box-shadow: 1px 0 0 #e6e6e6, -1px 0 0 #e6e6e6, 0 1px 0 #e6e6e6, 0 -1px 0 #e6e6e6, 0 3px 13px rgba(0,0,0,0.08); */
+  padding:20px;
+  margin-right: 0px !important;
+  height: 100%;
+}
+
+.left-panel-internal {
+  position: fixed;
+}
+
+.right-panel {
+  margin-top:30px;
+}
+
+.filters {
+  padding-top:20px;
+}
+
+.flatpickr-calendar {
+  background: none;
+  box-shadow: none;
+}
+
+.flatpickr-calendar.inline, flatpickr-rContainer, .flatpickr-days, .dayContainer {
+  /* width: 100%; */
+  min-width: 100%;
+  max-width: 100%;
+}
+
+/* .day-column:nth-last-child() {
+  border-right: none;
+} */
+
+.day-header {
+  font-size: 60px;
+  text-align: center;
+  color:#555;
+  margin-top: 20px;
+}
+
+.day-column h1 {
+  color:#555;
+  margin-top: -15px;
+}
+
+.day-column h4 {
+  margin-top:0px;
+}
+
+.appointments-table {
+  margin-top:10px;
+  &tr td {
+    /* width:100%;
+    height: 40px; */
+    font-size: 14px;
+    border-left:1px solid #ccc;
+    width:18.6%;
+    padding-left: 15px;
+  }
+  &tr td:nth-child(1) {
+    padding-left:4px;
+  }
+  &tr td .mat-icon {
+    vertical-align: bottom;
+    padding-top: 5px;
+    margin-bottom: -2px;
+  }
+}
+
+.appointment-cell-new {
+  border-left:4px solid green !important;
+}
+
+
+.appointment-cell-followup {
+  border-left:4px solid blue !important;
+}
+
+.appointment-cell-waiting-list {
+  border-left:4px solid orange !important;
+}
+
+/* .time-cell {
+  border-right: 3px solid green;
+} */
+
+.appointment-time {
+  font-size: 14px;
+}
+
+.edit-icon {
+  font-size: 18px;
+  float: right;
+  margin-top: 1px;
+}
+
+body {
+  background: #fff !important;
+}
+
+.left-button {
+  background: none;
+  border:none;
+  text-align: left;
+
+}
+
+.right-button {
+  background: none;
+  border:none;
+  float: right
+}
+
+.left-button .mat-icon {
+  font-size: 35px;
+}
+
+.right-button .mat-icon {
+  font-size: 35px;
+}
+
+.appointments-top-bar {
+  background: #fff;
+}
+
+.time-cell {
+  text-align: center;
+  width:7% !important;
+}
+
+.day-column-today {
+
+}
+
+// .rotate {
+
+//   /* Safari */
+//   -webkit-transform: rotate(-90deg);
+
+//   /* Firefox */
+//   -moz-transform: rotate(-90deg);
+
+//   /* IE */
+//   -ms-transform: rotate(-90deg);
+
+//   /* Opera */
+//   -o-transform: rotate(-90deg);
+
+//   /* Internet Explorer */
+//   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+
+//   }
+
+  .fadeIn-from-right {
+    animation: fadeIn-from-right 2.5s ease forwards;
+  }
+
+
+  @keyframes fadeIn-from-right {
+    0% {
+      opacity: 0;
+      transform: translate(750px,0);
+    }
+
+    80% {
+      opacity: 0;
+    }
+
+
+    100% {
+      opacity: 1;
+      transform: translate(0px,0);
+    }
+  }
+
+
+  .fadeIn-from-left {
+    animation: fadeIn-from-left 2.5s ease forwards;
+  }
+
+
+  @keyframes fadeIn-from-left {
+    0% {
+      opacity: 0;
+      transform: translate(-750px,0);
+    }
+
+    80% {
+      opacity: 0;
+    }
+
+
+    100% {
+      opacity: 1;
+      transform: translate(0px,0);
+    }
+  }
+

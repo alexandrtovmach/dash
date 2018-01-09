@@ -1,0 +1,35 @@
+.table {
+    display: flex;
+    .timeColumn {
+        flex: 0 0 100px;
+    }
+    .daysContainer {
+        flex: 1 0 auto;
+        display: flex;
+    }
+}
+
+.row {
+    @extend .centerContent;
+    width: 100px;
+    height: 50px;
+    border-left: 1px solid rgba(0, 0, 0, 0.3);
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.th {
+    width: 200px;
+    height: 100px;
+    border: none;
+    flex-direction: column;
+    &.timeTh {
+        width: 100px;
+        transform: rotateZ(-90deg)
+    }
+}
+
+.centerContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
