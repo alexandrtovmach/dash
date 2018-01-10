@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { DataSource } from '@angular/cdk/collections';
@@ -13,11 +13,15 @@ import { map } from 'rxjs/operators/map';
   styleUrls: ['./app.component.scss', './new-styles.scss']
 })
 export class AppComponent implements OnInit {
+  @ViewChild('daysContainer') daysContainer: ElementRef;
   inlineDatePicker;
   doctorCtrl: FormControl;
   filteredDoctors: Observable<any[]>;
   show = false;
-  days = []
+  baseDay = new Date(new Date().toDateString()).valueOf();
+  days = [];
+  position = 0;
+  diff = 0;
 
   doctors = [
     {
@@ -41,7 +45,17 @@ export class AppComponent implements OnInit {
         startWith(''),
         map(doctor => doctor ? this.filterDoctors(doctor) : this.doctors.slice())
       );
+  }
 
+  ngOnInit() {
+    this.show = true;
+    
+    this.timesGenerator();
+    this.daysGenerator(this.baseDay);
+    this.focusOnDate(this.baseDay)
+  }
+
+  timesGenerator() {
     for (let i = 8; i < 24; i++) {
       for (let j = 0; j < 4; j++) {
         let time = i + ':' + this.quarterHours[j];
@@ -53,12 +67,38 @@ export class AppComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.show = true;
-    console.log(this.days)
+  daysGenerator(base?) {
+    this.days = [];
+    for (let i = -15; i < 15; i++) {
+      this.days.push(base + i*24*60*60*1000)
+    }
   }
 
-
+  focusOnDate(date) {
+    this.position = this.days.indexOf(date);
+    if (this.position > -1) {
+      this.daysContainer.nativeElement.style.transform = `translateX(-${(200 * this.position) + this.position}px)`;
+      if (this.position > this.days.length - 5 || this.position < 5) {
+        setTimeout(() => {
+          this.daysContainer.nativeElement.style.transition = '0s';
+          setTimeout(() => {
+            this.daysContainer.nativeElement.style.transition = null;
+          }, 0)
+          this.daysGenerator(this.days[this.position]);
+          this.focusOnDate(date);
+        }, 1000)
+      }
+    } else {
+      this.daysContainer.nativeElement.style.transition = 'opacity 1s 0s, transform 0s 1s';
+      this.daysContainer.nativeElement.style.opacity = '0';
+      setTimeout(() => {
+        this.daysContainer.nativeElement.style.transition = null;
+        this.daysContainer.nativeElement.style.opacity = null;
+        this.daysGenerator(date);
+        this.focusOnDate(date);
+      }, 1000)
+    }
+  }
   filterDoctors(name) {
     return this.doctors.filter(doctor => doctor.nameEnglish.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
@@ -66,6 +106,17 @@ export class AppComponent implements OnInit {
   pickDoctor() {
     console.log(this.doctorCtrl.value)
   }
+
+  scrollCalendar(side) {
+    this.diff += side;
+    console.log(this.position - this.diff);
+    this.daysContainer.nativeElement.style.transform = `translateX(${parseFloat(this.daysContainer.nativeElement.style.transform.split('(')[1]) + (201 * side)}px)`;
+    if (this.position - this.diff > this.days.length - 5 || this.position - this.diff < 5) {
+      this.focusOnDate(this.days[this.position - this.diff]);
+      this.diff = 0;
+    }
+  }
+  
 }
 
 const fakedResponseObj = [

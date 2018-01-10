@@ -1,30 +1,102 @@
+$lightgrey: rgba(0, 0, 0, 0.3);
+$grey: rgba(0, 0, 0, 0.6);
 .table {
     display: flex;
     .timeColumn {
         flex: 0 0 100px;
     }
     .daysContainer {
-        flex: 1 0 auto;
-        display: flex;
+        flex: 0 0 calc(100% - 100px);
+        overflow: hidden;
+        position: relative;
+
+        >div:nth-child(1) {
+            display: flex;
+            transition: 1s;
+        }
+
+        .navigationArrows {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 200px;
+            position: absolute;
+            top: 0;
+            z-index: 5;
+            opacity: 0;
+            &:hover {
+                opacity: 1;
+            }
+            .left, .right {
+                @extend .centerContent;
+                transition: 0.5s;
+                cursor: pointer;
+                opacity: 0.5;
+                width: 50px;
+                height: 50px;
+                background-color: $lightgrey;
+                border-radius: 50%;
+                >img {
+                    width: 80%;
+                }
+                &:hover {
+                    opacity: 1;
+                }
+            }
+            .left {
+                >img {
+                    padding-right: 10%;
+                }
+            }
+            .right {
+                >img {
+                    padding-left: 10%;
+                }
+            }
+        }
+
+        .day {
+            color: $grey;
+            .date {
+                font-size: 60px;
+            }
+            .mounth {
+                font-size: 14px;
+            }
+            .weekday {
+                font-size: 20px;
+                font-weight: bold;
+            }
+        }
     }
 }
 
 .row {
     @extend .centerContent;
-    width: 100px;
     height: 50px;
-    border-left: 1px solid rgba(0, 0, 0, 0.3);
-    border-right: 1px solid rgba(0, 0, 0, 0.3);
+    border-left: 0.5px solid $lightgrey;
+    border-right: 0.5px solid $lightgrey;
+    &.time {
+        border-left: 1px solid $lightgrey;
+        width: 100px;
+    }
+    &.item {
+        width: 200px;
+    }
 }
 
 .th {
     width: 200px;
-    height: 100px;
+    height: 200px;
     border: none;
     flex-direction: column;
     &.timeTh {
         width: 100px;
-        transform: rotateZ(-90deg)
+        font-size: 40px;
+        >span {
+            transform: rotateZ(-90deg);
+        }
     }
 }
 
