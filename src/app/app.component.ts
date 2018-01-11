@@ -85,6 +85,17 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (filterBy) {
       this.daysGenerator(this.baseDay);
       this.eventsGenerator(events.filter(el => {
+        if (filterBy.all) {
+          for (let key in el) {
+            try {
+              if (el[key].toString().toLowerCase().includes(filterBy.value.toLowerCase())) {
+                return true;
+              }
+            } catch(err) {
+              console.error(err);
+            }
+          }
+        }
         return el[filterBy.name] === filterBy.value
       }));
     } else {
@@ -169,6 +180,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.focusOnDate(this.days[this.position - this.diff].dateMs);
       this.diff = 0;
     }
+  }
+
+  search(val) {
+    this.eventsGenerator(fakedResponseObj, {all: true, value: val})
   }
   
 }

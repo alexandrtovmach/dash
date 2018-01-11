@@ -12,8 +12,8 @@
       </div>
 
       <mat-form-field class="width-100pc">
-          <input type="text" matInput placeholder="Search By Anything..">
-        </mat-form-field>
+        <input type="text" matInput placeholder="Search By Anything.." (input)="search($event.target.value)">
+      </mat-form-field>
       <br>
       <br>
       <div class="align-center">
