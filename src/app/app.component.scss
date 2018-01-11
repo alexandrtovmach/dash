@@ -14,7 +14,7 @@
   background: #fff;
   /* box-shadow: 1px 0 0 #e6e6e6, -1px 0 0 #e6e6e6, 0 1px 0 #e6e6e6, 0 -1px 0 #e6e6e6, 0 3px 13px rgba(0,0,0,0.08); */
   padding:20px;
-  margin-right: 0px !important;
+  margin-right: 0px;
   height: 100%;
 }
 
@@ -82,16 +82,16 @@
 }
 
 .appointment-cell-new {
-  border-left:4px solid green !important;
+  border-left:4px solid green;
 }
 
 
 .appointment-cell-followup {
-  border-left:4px solid blue !important;
+  border-left:4px solid blue;
 }
 
 .appointment-cell-waiting-list {
-  border-left:4px solid orange !important;
+  border-left:4px solid orange;
 }
 
 /* .time-cell {
@@ -109,7 +109,7 @@
 }
 
 body {
-  background: #fff !important;
+  background: #fff;
 }
 
 .left-button {
@@ -139,7 +139,7 @@ body {
 
 .time-cell {
   text-align: center;
-  width:7% !important;
+  width:7%;
 }
 
 .day-column-today {
