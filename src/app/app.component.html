@@ -1,50 +1,38 @@
-<div fxLayout fxLayoutAlign="center" fxLayoutGap="10px">
-  <div fxFlex="25%" class="left-panel" [ngClass]="{'fadeOut-animated-slow': !show, 'fadeIn-from-left': show}">
-    <div class="left-panel-internal">
+<div class="wrapper">
+  <div class="left-panel" [ngClass]="{'fadeOut-animated-slow': !show, 'fadeIn-from-left': show}">
 
-      <div class="panel-body inline-flatpickr">
-        <input class="form-control" type="text" >
-        <mat-form-field>
-          <input matInput [matDatepicker]="inlineDatePicker" placeholder="Choose a date" (dateInput)="focusOnDate($event.value.valueOf())">
-          <mat-datepicker-toggle matSuffix [for]="inlineDatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #inlineDatePicker></mat-datepicker>
-        </mat-form-field>
-      </div>
+    <mat-form-field class="panel-item">
+      <input matInput [matDatepicker]="inlineDatePicker" placeholder="Choose a date" (dateInput)="focusOnDate($event.value.valueOf())">
+      <mat-datepicker-toggle matSuffix [for]="inlineDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #inlineDatePicker></mat-datepicker>
+    </mat-form-field>
 
-      <mat-form-field class="width-100pc">
-        <input type="text" matInput placeholder="Search By Anything.." (input)="search($event.target.value)">
-      </mat-form-field>
-      <br>
-      <br>
-      <div class="align-center">
-          <button mat-raised-button color="primary" class="align-center width-200px">Go To Nearest Availability</button><br><br>
-          <button mat-raised-button color="accent" class="width-200px"><mat-icon>print</mat-icon> Print</button>
-      </div>
+    <mat-form-field class="panel-item">
+      <input type="text" matInput placeholder="Search By Anything.." (input)="search($event.target.value)">
+    </mat-form-field>
 
-
+    <div class="panel-item">
+        <button mat-raised-button color="primary" class="panel-item">Go To Nearest Availability</button><br><br>
+        <button mat-raised-button color="accent" class="panel-item"><mat-icon>print</mat-icon> Print</button>
     </div>
-  </div>
-  <div fxFlex="75%" class="right-panel" [ngClass]="{'fadeOut-animated-slow': !show, 'fadeIn-from-right': show}">
 
-    <div fxLayout fxLayoutAlign="center" fxLayoutGap="10px">
-      <div fxFlex="30%">
-          <mat-form-field class="width-100pc">
-              <input matInput placeholder="Select Doctor" aria-label="Doctor" [matAutocomplete]="auto" [formControl]="doctorCtrl">
-              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="pickDoctor()">
-                <mat-option *ngFor="let doctor of filteredDoctors | async" [value]="doctor.nameEnglish">
-                  <span>{{ doctor.nameEnglish }}</span>
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-      </div>
-      <div fxFlex="10%"></div>
-      <div fxFlex="10%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 class="align-center margin-top-0">Filters :</h3></div>
-      <div fxFlex="50%">
-        <div class="filters">
-          <mat-checkbox color="primary">New</mat-checkbox>
-          <mat-checkbox color="accent">Follow Up</mat-checkbox>
-          <mat-checkbox color="danger">Wait List</mat-checkbox>
-        </div>
+  </div>
+
+  <div class="right-panel" [ngClass]="{'fadeOut-animated-slow': !show, 'fadeIn-from-right': show}">
+    <div class="right-control-panel" fxLayout fxLayoutAlign="center" fxLayoutGap="10px">
+      <mat-form-field class="panel-item">
+        <input matInput placeholder="Select Doctor" aria-label="Doctor" [matAutocomplete]="auto" [formControl]="doctorCtrl">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="pickDoctor()">
+          <mat-option *ngFor="let doctor of filteredDoctors | async" [value]="doctor.nameEnglish">
+            <span>{{ doctor.nameEnglish }}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <h3 class="filters">Filters :</h3>
+      <div class="filters">
+        <mat-checkbox color="primary">New</mat-checkbox>
+        <mat-checkbox color="accent">Follow Up</mat-checkbox>
+        <mat-checkbox color="danger">Wait List</mat-checkbox>
       </div>
     </div>
     <div class="width-100pc table">
@@ -83,86 +71,5 @@
         </div>
       </div>
     </div>
-
-    <!-- <table class="width-100pc appointments-table">
-      <thead>
-        <th style="width:5%"> <h1 class="rotate">TIME</h1></th>
-        <th style="width:19%">
-            <div class="day-header">22</div>
-            <h4 class="align-center margin-top-5 margin-bottom-5">December</h4>
-            <h2 class="align-center margin-top-5">Friday</h2>
-        </th>
-        <th style="width:19%">
-            <div class="day-header">23</div>
-            <h4 class="align-center margin-top-5 margin-bottom-5">December</h4>
-            <h2 class="align-center margin-top-5">Saturday</h2>
-        </th>
-        <th style="width:19%">
-            <div class="day-header">24</div>
-            <h4 class="align-center margin-top-5 margin-bottom-5">December</h4>
-            <h2 class="align-center margin-top-5">Sunday</h2>
-        </th>
-        <th style="width:19%">
-            <div class="day-header">25</div>
-            <h4 class="align-center margin-top-5 margin-bottom-5">December</h4>
-            <h2 class="align-center margin-top-5">Monday</h2>
-        </th>
-        <th style="width:19%">
-            <div class="day-header">26</div>
-            <h4 class="align-center margin-top-5 margin-bottom-5">December</h4>
-            <h2 class="align-center margin-top-5">Tuesday</h2>
-        </th>
-      </thead>
-          <tr *ngFor="let time of times" >
-              <td class="time-cell"><h3>{{time}}</h3></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-
-    </table> -->
-
-
-    <!-- <mat-table #table [dataSource]="dataSource" class="example-table">
-      
-      <ng-container matColumnDef="userId">
-        <mat-header-cell *matHeaderCellDef class="example-header-cell"> TIME </mat-header-cell>
-        <mat-cell *matCellDef="let row" class="example-cell"> {{times}} </mat-cell>
-      </ng-container>
-  
-      <ng-container matColumnDef="progress">
-        <mat-header-cell *matHeaderCellDef class="example-header-cell"> Progress </mat-header-cell>
-        <mat-cell *matCellDef="let row" class="example-cell"> {{row.progress}}% </mat-cell>
-      </ng-container>
-  
-      <ng-container matColumnDef="userName">
-        <mat-header-cell *matHeaderCellDef class="example-header-cell"> Name </mat-header-cell>
-        <mat-cell *matCellDef="let row" class="example-cell"> {{row.name}} </mat-cell>
-      </ng-container>
-  
-      <ng-container matColumnDef="color">
-        <mat-header-cell *matHeaderCellDef class="example-header-cell">Color</mat-header-cell>
-        <mat-cell *matCellDef="let row" class="example-cell"
-                  [style.color]="row.color">
-          {{row.color}}
-        </mat-cell>
-      </ng-container>
-  
-      <mat-header-row *matHeaderRowDef="displayedColumns" class="example-header-row"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" class="example-row"></mat-row>
-    </mat-table> -->
-
-    
-      <!-- Example of an appointment and how it should look like -->
-      <!-- <td class="appointment-cell-new">
-        <span class="appointment-time" color="primary"><mat-icon>access_time</mat-icon>&nbsp;&nbsp;12:00 - 12:30 &nbsp;&nbsp;&nbsp;
-          <mat-icon class="edit-icon">edit</mat-icon>
-        </span>
-        <br><mat-icon>person</mat-icon>&nbsp;&nbsp;1241 - Ahmed Ibrahim Abdallah
-        <br><mat-icon>description</mat-icon>&nbsp;&nbsp;Notes : He is requesting an report
-      </td> -->
-
   </div>
 </div>
