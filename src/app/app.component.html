@@ -59,11 +59,15 @@
         <div #daysContainer>
           <div class="day column" *ngFor="let day of days">
             <div class="th row">
-              <div class="date">{{day | date: 'dd'}}</div>
-              <div class="mounth">{{day | date: 'MMMM'}}</div>
-              <div class="weekday">{{day | date: 'EEEE'}}</div>
+              <div class="date">{{day.dateMs | date: 'dd'}}</div>
+              <div class="mounth">{{day.dateMs | date: 'MMMM'}}</div>
+              <div class="weekday">{{day.dateMs | date: 'EEEE'}}</div>
             </div>
-            <div class="row item" *ngFor="let time of times"></div>
+            <div [ngClass]="'row item" *ngFor="let time of times, let i = index">
+              <div class="event" *ngIf="day.events[i]">
+
+              </div>
+            </div>
           </div>
         </div>
         <div class="navigationArrows">

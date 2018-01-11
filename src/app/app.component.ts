@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, AfterViewChecked, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { DataSource } from '@angular/cdk/collections';
@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators/map';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss', './new-styles.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewChecked {
   @ViewChild('daysContainer') daysContainer: ElementRef;
   inlineDatePicker;
   doctorCtrl: FormControl;
@@ -52,7 +52,11 @@ export class AppComponent implements OnInit {
     
     this.timesGenerator();
     this.daysGenerator(this.baseDay);
-    this.focusOnDate(this.baseDay)
+    this.focusOnDate(this.baseDay);
+  }
+
+  ngAfterViewChecked() {
+    this.eventsGenerator(fakedResponseObj)
   }
 
   timesGenerator() {
@@ -70,12 +74,39 @@ export class AppComponent implements OnInit {
   daysGenerator(base?) {
     this.days = [];
     for (let i = -15; i < 15; i++) {
-      this.days.push(base + i*24*60*60*1000)
+      this.days.push({dateMs: (base + i*24*60*60*1000)});
     }
   }
 
+  eventsGenerator(events) {
+    events.forEach(el => {
+      const from = el.from.valueOf(), to = el.to.valueOf();
+      if (from >= this.days[0].dateMs && to <= this.days[this.days.length - 1].dateMs) {
+        let date = new Date(new Date(from).toDateString()).valueOf(),
+            hours = new Date(from).getHours(),
+            minutes = Math.round(new Date(from).getMinutes()/15)*15;
+        if (minutes === 60) {
+          hours++;
+          minutes = 0;
+        }
+        const time = `${hours < 10? '0'+hours: hours}:${minutes < 10? '0'+minutes: minutes}`;
+        this.days.forEach(elem => {
+          if (elem.date === date) {
+            elem.events[0] = el
+          }
+        })
+      }
+    });
+  }
+
   focusOnDate(date) {
-    this.position = this.days.indexOf(date);
+    this.position = -1;
+    for (let i = 0; i < this.days.length; i++) {
+      if (this.days[i].dateMs === date) {
+        this.position = i;
+        break;
+      }
+    }
     if (this.position > -1) {
       this.daysContainer.nativeElement.style.transform = `translateX(-${(200 * this.position) + this.position}px)`;
       if (this.position > this.days.length - 5 || this.position < 5) {
@@ -84,7 +115,7 @@ export class AppComponent implements OnInit {
           setTimeout(() => {
             this.daysContainer.nativeElement.style.transition = null;
           }, 0)
-          this.daysGenerator(this.days[this.position]);
+          this.daysGenerator(this.days[this.position].dateMs);
           this.focusOnDate(date);
         }, 1000)
       }
@@ -99,6 +130,7 @@ export class AppComponent implements OnInit {
       }, 1000)
     }
   }
+
   filterDoctors(name) {
     return this.doctors.filter(doctor => doctor.nameEnglish.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
@@ -112,7 +144,7 @@ export class AppComponent implements OnInit {
     console.log(this.position - this.diff);
     this.daysContainer.nativeElement.style.transform = `translateX(${parseFloat(this.daysContainer.nativeElement.style.transform.split('(')[1]) + (201 * side)}px)`;
     if (this.position - this.diff > this.days.length - 5 || this.position - this.diff < 5) {
-      this.focusOnDate(this.days[this.position - this.diff]);
+      this.focusOnDate(this.days[this.position - this.diff].dateMs);
       this.diff = 0;
     }
   }
@@ -125,13 +157,13 @@ const fakedResponseObj = [
     service: "Cardio",
     patientRecord: "Alex",
     date: "10/10/1995",
-    from: new Date(2018, 0, 10, 9),
-    to: new Date(2018, 0, 10, 12),
+    from: new Date(2018, 0, 11, 9),
+    to: new Date(2018, 0, 11, 12),
     status: "ussual",
     category: "regular medicine",
     createdBy: "assistant",
     createdAt: new Date(2017, 11, 10),
-    notes: ""
+    notes: "He is requesting an report"
   },
   {
     doctor: "Dr. Ahmed Mohsen",
@@ -144,6 +176,6 @@ const fakedResponseObj = [
     category: "regular medicine",
     createdBy: "assistant",
     createdAt: new Date(2017, 11, 10),
-    notes: ""
+    notes: "He want to quick review"
   }
 ]
