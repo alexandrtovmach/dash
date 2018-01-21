@@ -1,5 +1,5 @@
 
-    <form>
+    <form (ngSubmit)="savePatient()">
       <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
         <mat-form-field fxFlex="50%">
           <input matInput placeholder="English Name *" [formControl]="nameEnglishControl" [errorStateMatcher]="matcher" class="width-100pc">
@@ -152,7 +152,15 @@
         </mat-form-field>
       </div>
 
-      <br>
+      <div class="uploaders">
+        <div class="first" [ngClass]="(files.first && files.first[0])? 'uploaded': ''">
+          <file-drop headertext="First uploader" (onFileDrop)="dropped($event, 'first')"></file-drop>    
+        </div>
+        <div class="second" [ngClass]="(files.second && files.second[0])? 'uploaded': ''">
+          <file-drop headertext="Second uploader" (onFileDrop)="dropped($event, 'second')"></file-drop>        
+        </div>
+      </div>
+
       <button mat-raised-button color="primary" class="width-100pc">Add Patient</button>
 
     </form>

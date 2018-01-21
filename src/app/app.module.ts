@@ -1,8 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 import {
     MatSnackBarModule,
     MatChipsModule,
@@ -37,8 +40,11 @@ import { FlatpickrModule, FLATPICKR } from 'angularx-flatpickr';
 import { NvD3Module } from 'ng2-nvd3';
 import 'd3';
 import 'nvd3';
+import { FileDropModule } from 'ngx-file-drop';
 
 import { AppComponent } from './app.component';
+import { PatientRecordComponent } from './patient-record/patient-record.component';
+import { routerConfig } from './router-config';
 
 export function flatpickrFactory() {
   return flatpickr;
@@ -46,10 +52,12 @@ export function flatpickrFactory() {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PatientRecordComponent
   ],
   imports: [
     BrowserModule,
+    RouterModule.forRoot(routerConfig),
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
@@ -83,6 +91,9 @@ export function flatpickrFactory() {
     MatProgressBarModule,
     MatExpansionModule,
     BrowserAnimationsModule,
+    FileDropModule,
+    HttpModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
