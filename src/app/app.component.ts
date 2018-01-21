@@ -22,6 +22,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   days = [];
   position = 0;
   diff = 0;
+  filteredEvents = [];
 
   doctors = [
     {
@@ -49,6 +50,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.show = true;
+    this.filteredEvents = fakedResponseObj;
     
     this.timesGenerator();
     this.daysGenerator(this.baseDay);
@@ -84,20 +86,27 @@ export class AppComponent implements OnInit, AfterViewInit {
   eventsGenerator(events, filterBy?) {
     if (filterBy) {
       this.daysGenerator(this.baseDay);
-      this.eventsGenerator(events.filter(el => {
-        if (filterBy.all) {
-          for (let key in el) {
-            try {
-              if (el[key].toString().toLowerCase().includes(filterBy.value.toLowerCase())) {
-                return true;
+      if (filterBy.off) {
+        this.filteredEvents.push(...events.filter(el => {
+          return el[filterBy.name] !== filterBy.value
+        }))
+      } else {
+        this.filteredEvents = this.filteredEvents.filter(el => {
+          if (filterBy.all) {
+            for (let key in el) {
+              try {
+                if (el[key].toString().toLowerCase().includes(filterBy.value.toLowerCase())) {
+                  return true;
+                }
+              } catch(err) {
+                console.error(err);
               }
-            } catch(err) {
-              console.error(err);
             }
           }
-        }
-        return el[filterBy.name] === filterBy.value
-      }));
+          return el[filterBy.name] === filterBy.value
+        })
+      }
+      this.eventsGenerator(this.filteredEvents);
     } else {
       events.forEach(el => {
         const from = el.from.valueOf(), to = el.to.valueOf();
@@ -173,6 +182,14 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.eventsGenerator(fakedResponseObj, {name: 'doctor', value: this.doctorCtrl.value})
   }
 
+  filterChecked(checked, name) {
+    if (checked) {
+      this.eventsGenerator(fakedResponseObj, {name: 'category', value: name});
+    } else {
+      this.eventsGenerator(fakedResponseObj, {name: 'category', value: name, off: true});
+    }
+  }
+
   scrollCalendar(side) {
     this.diff += side;
     this.daysContainer.nativeElement.style.transform = `translateX(${parseFloat(this.daysContainer.nativeElement.style.transform.split('(')[1]) + (201 * side)}px)`;
@@ -194,10 +211,10 @@ const fakedResponseObj = [
     service: "Cardio",
     patientRecord: "Alex",
     date: "10/10/1995",
-    from: new Date(2018, 0, 11, 9),
-    to: new Date(2018, 0, 11, 12),
+    from: new Date(2018, 0, 19, 9),
+    to: new Date(2018, 0, 19, 12),
     status: "ussual",
-    category: "regular medicine",
+    category: "new",
     createdBy: "assistant",
     createdAt: new Date(2017, 11, 10),
     notes: "He is requesting an report"
@@ -207,10 +224,10 @@ const fakedResponseObj = [
     service: "Cardio",
     patientRecord: "Alex",
     date: "10/10/1995",
-    from: new Date(2018, 0, 11, 13),
-    to: new Date(2018, 0, 11, 15),
+    from: new Date(2018, 0, 18, 13),
+    to: new Date(2018, 0, 18, 15),
     status: "ussual",
-    category: "regular medicine",
+    category: "new",
     createdBy: "assistant",
     createdAt: new Date(2017, 11, 10),
     notes: "He is requesting an report"
@@ -220,10 +237,62 @@ const fakedResponseObj = [
     service: "Cardio",
     patientRecord: "Mira",
     date: "3/5/2001",
-    from: new Date(2018, 0, 12, 12),
-    to: new Date(2018, 0, 12, 15),
+    from: new Date(2018, 0, 19, 13),
+    to: new Date(2018, 0, 19, 15),
     status: "ussual",
-    category: "regular medicine",
+    category: "wait list",
+    createdBy: "assistant",
+    createdAt: new Date(2017, 11, 10),
+    notes: "He want to quick review"
+  },
+  {
+    doctor: "Dr. Ahmed Mohsen",
+    service: "Cardio",
+    patientRecord: "Mira",
+    date: "3/5/2001",
+    from: new Date(2018, 0, 18, 18, 30),
+    to: new Date(2018, 0, 18, 19),
+    status: "ussual",
+    category: "wait list",
+    createdBy: "assistant",
+    createdAt: new Date(2017, 11, 10),
+    notes: "He want to quick review"
+  },
+  {
+    doctor: "Dr. Mohamed Nasr",
+    service: "Cardio",
+    patientRecord: "Mira",
+    date: "3/5/2001",
+    from: new Date(2018, 0, 19, 17),
+    to: new Date(2018, 0, 19, 19),
+    status: "ussual",
+    category: "followup",
+    createdBy: "assistant",
+    createdAt: new Date(2017, 11, 10),
+    notes: "He want to quick review"
+  },
+  {
+    doctor: "Dr. Mohamed Nasr",
+    service: "Cardio",
+    patientRecord: "Mira",
+    date: "3/5/2001",
+    from: new Date(2018, 0, 20, 12),
+    to: new Date(2018, 0, 20, 15),
+    status: "ussual",
+    category: "followup",
+    createdBy: "assistant",
+    createdAt: new Date(2017, 11, 10),
+    notes: "He want to quick review"
+  },
+  {
+    doctor: "Dr. Ahmed Mohsen",
+    service: "Cardio",
+    patientRecord: "Mira",
+    date: "3/5/2001",
+    from: new Date(2018, 0, 21, 12),
+    to: new Date(2018, 0, 21, 15),
+    status: "ussual",
+    category: "followup",
     createdBy: "assistant",
     createdAt: new Date(2017, 11, 10),
     notes: "He want to quick review"
