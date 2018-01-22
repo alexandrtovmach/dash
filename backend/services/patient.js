@@ -1,30 +1,22 @@
-const menuRepository = require('../repositories/menu')
+const patientRepository = require('../repositories/patient')
 const storageRepository = require('../repositories/storage')
 
 module.exports = {
 
-  getAllMenus: (callback) => {
-    menuRepository.findAll()
-      .then((data) => {
-        callback(null, data.val())
-      })
-      .catch((err) => {
-        callback(err)
-      })
+  getAllPatients: (callback) => {
+    patientRepository.getAll(callback)
   },
 
-  getMenuById: (menuId, callback) => {
-    menuRepository.findById(menuId)
-      .then((data) => {
-        callback(null, data.val())
-      })
-      .catch((err) => {
-        callback(err)
-      })
+  getPatientById: (patientId, callback) => {
+    patientRepository.findById(patientId, callback)
   },
 
-  addMenu: (menuObj, callback) => {
-    menuRepository.add(menuObj)
+  searchPatient: (searchKey, callback) => {
+    patientRepository.searchByKey(searchKey, callback)
+  },
+
+  addPatient: (patientObj, callback) => {
+    patientRepository.add(patientObj)
       .then((data) => {
         callback(null, data.key)
       })
@@ -33,8 +25,8 @@ module.exports = {
       })
   },
 
-  updateMenu: (menuId, newMenuObj, callback) => {
-    menuRepository.update(menuId, newMenuObj)
+  updatePatient: (patientId, newPatientObj, callback) => {
+    patientRepository.update(patientId, newPatientObj)
       .then((data) => {
         callback(null, true)
       })

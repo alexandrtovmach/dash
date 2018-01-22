@@ -1,24 +1,41 @@
-class generalRepository {
+const ObjectId = require('mongoose').Types.ObjectId;
 
-    constructor (dbRef) {
-        this.dbRef = dbRef
-    }
+function Repository() {}
 
-    findAll(callback) {
-        return this.dbRef.once('value')
-    }
+Repository.prototype.add = add;
+Repository.prototype.deleteById = deleteById;
+Repository.prototype.getAll = getAll;
+Repository.prototype.getById = getById;
+Repository.prototype.update = update;
 
-    findById(id) {
-        return this.dbRef.child(id).once('value')
-    }
-    
-    add(data) {
-        return this.dbRef.push(data)
-    }
-    
-    update(id, data, callback) {
-        return this.dbRef.child(id).update(data)
-    }
+function add(data, callback) {
+    const model = this.model;
+    const newItem = new model(data);
+    newItem.save(callback);
 }
 
-module.exports = generalRepository;
+function deleteById(id, callback) {
+    const query = this.model.update({
+        _id: id
+    }, {isRemoved: true});
+    query.exec(callback);
+}
+
+function getAll(callback) {
+    const query = this.model.find({});
+    query.exec(callback);
+}
+
+function getById(id, callback) {
+    const query = this.model.findOne({
+        _id: id
+    });
+    query.exec(callback);
+}
+
+function update(id, body, callback) {
+    let query = this.model.update({_id: id}, body);
+    query.exec(callback);
+}
+
+module.exports = Repository;

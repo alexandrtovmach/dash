@@ -1,7 +1,7 @@
 const express = require('express')
 const Multer = require('multer')
 const router = express.Router()
-const menuService = require('../services/menu')
+const patientService = require('../services/patient')
 
 const multer = Multer({
     storage: Multer.memoryStorage(),
@@ -10,18 +10,28 @@ const multer = Multer({
     }
 });
 
-// router.get('/', (req, res, next) => {
-//     menuService.getAllMenus((err, result) => {
-//         if (err) {
-//             console.error(err)
-//             res.status(400).send(err)
-//         }
-//         res.status(200).send(result)
-//     })
-// })
+router.get('/', (req, res, next) => {
+    patientService.getAllPatients((err, result) => {
+        if (err) {
+            console.error(err)
+            res.status(400).send(err)
+        }
+        res.status(200).send(result)
+    })
+})
 
 router.get('/:id', (req, res, next) => {
-    menuService.getMenuById(req.params.id, (err, result) => {
+    patientService.getPatientById(req.params.id, (err, result) => {
+        if (err) {
+            console.error(err)
+            res.status(400).send(err)
+        }
+        res.status(200).send(result)
+    })
+})
+
+router.get('/search/:key', (req, res, next) => {
+    patientService.searchPatient(req.params.key, (err, result) => {
         if (err) {
             console.error(err)
             res.status(400).send(err)
@@ -31,7 +41,7 @@ router.get('/:id', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    menuService.addMenu(req.body, (err, result) => {
+    patientService.addPatient(req.body, (err, result) => {
         if (err) {
             console.error(err)
             res.status(400).send(err)
@@ -41,7 +51,7 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/:id', (req, res, next) => {
-    menuService.updateMenu(req.params.id, req.body, (err, result) => {
+    patientService.updatePatient(req.params.id, req.body, (err, result) => {
         if (err) {
             console.error(err)
             res.status(400).send(err)
@@ -51,7 +61,7 @@ router.put('/:id', (req, res, next) => {
 })
 
 router.post('/upload', multer.single('file'), (req, res, next) => {
-    menuService.uploadImage(req.file, (err, result) => {
+    patientService.uploadImage(req.file, (err, result) => {
         if (err) {
             console.error(err)
             res.status(400).send(err)
@@ -62,7 +72,7 @@ router.post('/upload', multer.single('file'), (req, res, next) => {
 
 router.post('/uploadFile', multer.single('file'), (req, res, next) => {
     console.log(req.file)
-    // menuService.uploadImage(req.file, (err, result) => {
+    // patientService.uploadImage(req.file, (err, result) => {
     //     if (err) {
     //         console.error(err)
     //         res.status(400).send(err)
@@ -73,7 +83,7 @@ router.post('/uploadFile', multer.single('file'), (req, res, next) => {
 
 
 router.delete('/delete/:id', (req, res, next) => {
-    menuService.deleteImage(req.params.id, (err, result) => {
+    patientService.deleteImage(req.params.id, (err, result) => {
         if (err) {
             console.error(err)
             res.status(400).send(err)

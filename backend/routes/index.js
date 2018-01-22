@@ -1,7 +1,7 @@
-const menu = require('./menu')
+const patient = require('./patient')
 
 module.exports = {
   init: (app) => {
-    app.use('/api/menu', menu)
+    app.use('/api/patient', patient)
   }
 }
