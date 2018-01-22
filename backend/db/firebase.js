@@ -1,19 +1,19 @@
 const admin = require("firebase-admin")
 const { db, serviceAccountKey } = require("../config")
 
-function dbConnectionHandler() {
+function firebaseConnectionHandler() {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccountKey),
-    databaseURL: db.databaseURL,
-    storageBucket: db.storageBucket,
+    databaseURL: db.FIREBASE_databaseURL,
+    storageBucket: db.FIREBASE_storageBucket,
     databaseAuthVariableOverride: {
-      uid: db.uid
+      uid: db.FIREBASE_uid
     }
   })
 
   // connecting request
   this.init = () => {
-    this.database.once('value')
+    this.storage = admin.storage().bucket().get()
       .then(() => {
         console.log('\n============================\n=== Firebase connected ===\n============================\n')
       })
@@ -21,10 +21,8 @@ function dbConnectionHandler() {
         console.error('\n!!!!Firebase CONNECTION ERROR!!!!\n', errorObject.code)
       })
   }
-
-
-  this.database = admin.database().ref(db.refName)
-  this.storage = admin.storage().bucket()
+  
 }
 
-module.exports = new dbConnectionHandler
+module.exports = new firebaseConnectionHandler
+

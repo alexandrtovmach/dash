@@ -1,11 +1,13 @@
 module.exports = {
-  apiKey: process.env.MENU_apiKey,
-  authDomain: process.env.MENU_authDomain,
-  databaseURL: process.env.MENU_databaseURL,
-  projectId: process.env.MENU_projectId,
-  storageBucket: process.env.MENU_storageBucket,
-  messagingSenderId: process.env.MENU_messagingSenderId,
-  uid: process.env.MENU_uid,
-  refName: process.env.MENU_refName,
-  client_email: process.env.MENU_client_email
+  FIREBASE_databaseURL: process.env.firebase_databaseURL,
+  FIREBASE_storageBucket: process.env.firebase_storageBucket,
+  FIREBASE_uid: process.env.firebase_uid,
+	MONGO_uri: process.env.mongo_uri,
+	MONGO_opts: {
+    user: process.env.mongo_user,
+    pass: process.env.mongo_pass,
+    socketTimeoutMS: 0,
+    keepAlive: true,
+    reconnectTries: 30
+	}
 }

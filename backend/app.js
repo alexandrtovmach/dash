@@ -6,7 +6,8 @@ const bodyParser = require('body-parser')
 const dotenv = require('dotenv').config()
 
 const routes = require('./routes/')
-const db = require('./db/firebase')
+const firebase = require('./db/firebase')
+const mongodb = require('./db/mongodb')
 
 const app = express()
 
@@ -29,7 +30,8 @@ routes.init(app)
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, '/../dist')))
 
-db.init()
+firebase.init();
+mongodb.init();
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
