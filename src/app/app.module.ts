@@ -45,6 +45,7 @@ import { NgUploaderModule } from 'ngx-uploader';
 import { AppComponent } from './app.component';
 import { PatientRecordComponent } from './patient-record/patient-record.component';
 import { PatientSearchComponent } from './patient-search/patient-search.component';
+import { CalendarComponent } from './calendar/calendar.component';
 import { routerConfig } from './router-config';
 
 export function flatpickrFactory() {
@@ -55,7 +56,8 @@ export function flatpickrFactory() {
   declarations: [
     AppComponent,
     PatientRecordComponent,
-    PatientSearchComponent
+    PatientSearchComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,

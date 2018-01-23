@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { CalendarComponent } from './calendar/calendar.component';
 import { PatientRecordComponent } from './patient-record/patient-record.component';
 import { PatientSearchComponent } from './patient-search/patient-search.component';
 
@@ -13,7 +14,7 @@ export const routerConfig: Routes = [
   },
   {
     path: 'calendar',
-    component: AppComponent
+    component: CalendarComponent
   },
   {
     path: 'patient',
