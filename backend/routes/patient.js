@@ -71,14 +71,13 @@ router.post('/upload', multer.single('file'), (req, res, next) => {
 })
 
 router.post('/uploadFile', multer.single('file'), (req, res, next) => {
-    console.log(req.file)
-    // patientService.uploadImage(req.file, (err, result) => {
-    //     if (err) {
-    //         console.error(err)
-    //         res.status(400).send(err)
-    //     }
-    //     res.status(200).send(result)
-    // })
+    patientService.uploadImage(req.file, (err, result) => {
+        if (err) {
+            console.error(err)
+            res.status(400).send(err)
+        }
+        res.status(200).send(result)
+    })
 })
 
 

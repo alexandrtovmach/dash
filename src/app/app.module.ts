@@ -40,7 +40,7 @@ import { FlatpickrModule, FLATPICKR } from 'angularx-flatpickr';
 import { NvD3Module } from 'ng2-nvd3';
 import 'd3';
 import 'nvd3';
-import { FileDropModule } from 'ngx-file-drop';
+import { NgUploaderModule } from 'ngx-uploader';
 
 import { AppComponent } from './app.component';
 import { PatientRecordComponent } from './patient-record/patient-record.component';
@@ -93,7 +93,7 @@ export function flatpickrFactory() {
     MatProgressBarModule,
     MatExpansionModule,
     BrowserAnimationsModule,
-    FileDropModule,
+    NgUploaderModule,
     HttpModule,
     HttpClientModule
   ],

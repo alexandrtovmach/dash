@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Observable } from 'rxjs/Observable';
 import { startWith } from 'rxjs/operators/startWith';
 import { Headers, Http } from '@angular/http';
 import { map } from 'rxjs/operators/map';
-import { UploadEvent, UploadFile } from 'ngx-file-drop';
+import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -50,10 +50,14 @@ export class PatientRecordComponent implements OnInit {
       nameArabic: 'الامارات'
     }
   ];
-  files: {
-    fisrt: UploadFile[],
-    second: UploadFile[]
-  } | {} = {};
+  options: UploaderOptions;
+  formData: FormData;
+  filesFirst: UploadFile[] = [];
+  filesSecond: UploadFile[] = [];
+  first: EventEmitter<UploadInput> = new EventEmitter<UploadInput>();
+  second: EventEmitter<UploadInput> = new EventEmitter<UploadInput>();
+  humanizeBytes: Function = humanizeBytes;
+  dragOver: boolean;
 
   constructor(private http: Http) {}
 
@@ -69,54 +73,73 @@ export class PatientRecordComponent implements OnInit {
   filterCountries(name) {
     return this.countries.filter(country => country.nameEnglish.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
-  
-  
-  dropped(event: UploadEvent, field: 'first' | 'second') {
-    this.files[field] = event.files;
-    console.log(this.files[field]);
+
+  onUploadOutputFirst(output: UploadOutput): void {
+    if (output.type === 'addedToQueue'  && typeof output.file !== 'undefined') {
+      this.filesFirst.push(output.file);
+    } else if (output.type === 'uploading' && typeof output.file !== 'undefined') {
+      const index = this.filesFirst.findIndex(file => typeof output.file !== 'undefined' && file.id === output.file.id);
+      this.filesFirst[index] = output.file;
+    } else if (output.type === 'removed') {
+      this.filesFirst = this.filesFirst.filter((file: UploadFile) => file !== output.file);
+    } else if (output.type === 'dragOver') {
+      this.dragOver = true;
+    } else if (output.type === 'dragOut') {
+      this.dragOver = false;
+    } else if (output.type === 'drop') {
+      this.dragOver = false;
+    }
   }
 
-  savePatient(patientForm) {
-    // if (
-    //   this.nameEnglishControl.valid &&
-    //   this.nameArabicControl.valid &&
-    //   this.mobileControl.valid &&
-    //   this.nationalIdControl.valid &&
-    //   this.addressControl.valid &&
-    //   this.nationalityControl.valid &&
-    //   this.files['first'] && this.files['first'].length &&
-    //   this.files['second'] && this.files['second'].length
-    // ) {
-      this.sendFile(this.files)
-      const patient = {
-        nameEnglish: this.nameEnglishControl.value,
-        nameArabic: this.nameArabicControl.value,
-        mobile: this.mobileControl.value,
-        phone: '',
-        birthday: '',
-        occupation: '',
-        nationalId: this.nationalIdControl.value,
-        address: this.addressControl.value,
-        nationality: this.nationalityControl.value,
-        referral: '',
-        status: '',
-        category: '',
-        charity: ''
-      }
-    // } else {
-    //   return false;
-    // }
+  onUploadOutputSecond(output: UploadOutput): void {
+    if (output.type === 'addedToQueue'  && typeof output.file !== 'undefined') {
+      this.filesSecond.push(output.file);
+    } else if (output.type === 'uploading' && typeof output.file !== 'undefined') {
+      const index = this.filesSecond.findIndex(file => typeof output.file !== 'undefined' && file.id === output.file.id);
+      this.filesSecond[index] = output.file;
+    } else if (output.type === 'removed') {
+      this.filesSecond = this.filesSecond.filter((file: UploadFile) => file !== output.file);
+    } else if (output.type === 'dragOver') {
+      this.dragOver = true;
+    } else if (output.type === 'dragOut') {
+      this.dragOver = false;
+    } else if (output.type === 'drop') {
+      this.dragOver = false;
+    }
   }
 
-  sendFile(files) {
-    this.http.post('/api/menu/uploadFile', files['first'][0], {headers: new Headers({'Content-Type': 'multipart/form-data'})}).toPromise()
-      .then(data => {
-        console.log(data)
-      })
-      .catch(err => {
-        console.error(err)
-      })
+  startUploadFirst(): void {
+    const event: UploadInput = {
+      type: 'uploadAll',
+      url: '/api/patient/uploadFile',
+      method: 'POST',
+      file: this.filesFirst[0]
+    };
+    this.first.emit(event);
+    console.log(this.filesSecond);
   }
+
+  startUploadSecond(): void {
+    const event: UploadInput = {
+      type: 'uploadAll',
+      url: '/api/patient/uploadFile',
+      method: 'POST',
+      file: this.filesSecond[0]
+    };
+    this.first.emit(event)
+  }
+
+  // cancelUpload(id: string): void {
+  //   this.uploadInput.emit({ type: 'cancel', id: id });
+  // }
+
+  // removeFile(id: string): void {
+  //   this.uploadInput.emit({ type: 'remove', id: id });
+  // }
+
+  // removeAllFiles(): void {
+  //   this.uploadInput.emit({ type: 'removeAll' });
+  // }
 }
 
 // https://8dfu8j4cih.execute-api.ap-southeast-1.amazonaws.com/dev/patientRecord/create

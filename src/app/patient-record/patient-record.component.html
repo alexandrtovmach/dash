@@ -1,168 +1,183 @@
 
-    <form (ngSubmit)="savePatient()">
-      <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
-        <mat-form-field fxFlex="50%">
-          <input matInput placeholder="English Name *" [formControl]="nameEnglishControl" [errorStateMatcher]="matcher" class="width-100pc">
-          <mat-error *ngIf="nameEnglishControl.hasError('required')">
-            English Name is
-            <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+<form (ngSubmit)="savePatient()">
+  <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
+    <mat-form-field fxFlex="50%">
+      <input matInput placeholder="English Name *" [formControl]="nameEnglishControl" [errorStateMatcher]="matcher" class="width-100pc">
+      <mat-error *ngIf="nameEnglishControl.hasError('required')">
+        English Name is
+        <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
 
-        <mat-form-field fxFlex="50%" class="rtl">
-          <input matInput placeholder="* Arabic Name" [formControl]="nameArabicControl" [errorStateMatcher]="matcher" class="width-100pc">
-          <mat-error *ngIf="nameArabicControl.hasError('required')">
-            Arabic Name is
-            <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+    <mat-form-field fxFlex="50%" class="rtl">
+      <input matInput placeholder="* Arabic Name" [formControl]="nameArabicControl" [errorStateMatcher]="matcher" class="width-100pc">
+      <mat-error *ngIf="nameArabicControl.hasError('required')">
+        Arabic Name is
+        <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
+    <mat-form-field fxFlex="50%">
+      <input matInput placeholder="Mobile *" [formControl]="mobileControl" [errorStateMatcher]="matcher">
+      <mat-error *ngIf="emailControl.hasError('required')">
+        Mobile is
+        <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="50%">
+      <input matInput placeholder="Email" [formControl]="emailControl" [errorStateMatcher]="matcher">
+      <mat-error *ngIf="emailControl.hasError('email') && !emailControl.hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="emailControl.hasError('required')">
+        Email is
+        <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
+
+    <mat-form-field fxFlex="30%">
+      <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="16%">
+      <input matInput placeholder="Age">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="50%">
+      <input matInput placeholder="Occupation">
+    </mat-form-field>
+
+  </div>
+
+
+  <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
+
+    <mat-form-field fxFlex="100%">
+      <input matInput placeholder="Address *" [formControl]="addressControl" [errorStateMatcher]="matcher">
+      <mat-error *ngIf="addressControl.hasError('email') && !addressControl.hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="addressControl.hasError('required')">
+        Email is
+        <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+
+
+  <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
+    <mat-form-field fxFlex="50%">
+      <input matInput placeholder="Country *" aria-label="Country" [matAutocomplete]="auto" [formControl]="countryCtrl">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let country of filteredCountries | async" [value]="country.nameEnglish">
+          <span>{{ country.nameEnglish }}</span> |
+          <small>{{ country.nameArabic }}</small>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field fxFlex="50%">
+      <input matInput placeholder="National ID" [formControl]="nationalIdControl" [errorStateMatcher]="matcher">
+      <mat-error *ngIf="nationalIdControl.hasError('required')">
+        National ID is
+        <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+
+  <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
+    <mat-form-field fxFlex="50%">
+      <input matInput placeholder="Referral">
+    </mat-form-field>
+    <mat-form-field fxFlex="50%">
+      <mat-select placeholder="Marketing Channel">
+        <mat-option value="Facebook">Facebook</mat-option>
+        <mat-option value="Instagram">Instagram</mat-option>
+        <mat-option value="Twitter">Twitter</mat-option>
+        <mat-option value="Friends">Friends</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
+    <mat-form-field fxFlex="100%">
+      <input matInput placeholder="Notes">
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
+    <mat-form-field fxFlex="30%">
+      <mat-select placeholder="Insurance Policy">
+        <mat-option value="000">Policy 1</mat-option>
+        <mat-option value="000">Policy 2</mat-option>
+        <mat-option value="000">Policy 3</mat-option>
+        <mat-option value="000">Policy 4</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="16%">
+      <mat-select placeholder="Category">
+        <mat-option value="A">A</mat-option>
+        <mat-option value="B">B</mat-option>
+        <mat-option value="C">C</mat-option>
+        <mat-option value="VIP">VIP</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="50%">
+      <input matInput placeholder="Insurance ID">
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
+    <mat-form-field fxFlex="50%">
+      <mat-select placeholder="Contracts">
+        <mat-option value="Contract 1">Contract 1</mat-option>
+        <mat-option value="Contract 2">Contract 2</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="50%">
+      <mat-select placeholder="Charity">
+        <mat-option value="Charity 1">Charity 1</mat-option>
+        <mat-option value="Charity 2">Charity 2</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="uploaders">
+    <div>
+      <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutputFirst($event)" [uploadInput]="first" [ngClass]="{ 'is-drop-over': dragOver, 'dropped': filesFirst.length }">
+        <span>First</span>
       </div>
-
-      <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
-        <mat-form-field fxFlex="50%">
-          <input matInput placeholder="Mobile *" [formControl]="mobileControl" [errorStateMatcher]="matcher">
-          <mat-error *ngIf="emailControl.hasError('required')">
-            Mobile is
-            <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex="50%">
-          <input matInput placeholder="Email" [formControl]="emailControl" [errorStateMatcher]="matcher">
-          <mat-error *ngIf="emailControl.hasError('email') && !emailControl.hasError('required')">
-            Please enter a valid email address
-          </mat-error>
-          <mat-error *ngIf="emailControl.hasError('required')">
-            Email is
-            <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-
-      </div>
-
-      <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
-
-        <mat-form-field fxFlex="30%">
-          <input matInput [matDatepicker]="picker" placeholder="Choose a date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field fxFlex="16%">
-          <input matInput placeholder="Age">
-        </mat-form-field>
-
-        <mat-form-field fxFlex="50%">
-          <input matInput placeholder="Occupation">
-        </mat-form-field>
-
-      </div>
-
-
-      <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
-
-        <mat-form-field fxFlex="100%">
-          <input matInput placeholder="Address *" [formControl]="addressControl" [errorStateMatcher]="matcher">
-          <mat-error *ngIf="addressControl.hasError('email') && !addressControl.hasError('required')">
-            Please enter a valid email address
-          </mat-error>
-          <mat-error *ngIf="addressControl.hasError('required')">
-            Email is
-            <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-
-      </div>
-
-
-      <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
-        <mat-form-field fxFlex="50%">
-          <input matInput placeholder="Country *" aria-label="Country" [matAutocomplete]="auto" [formControl]="countryCtrl">
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let country of filteredCountries | async" [value]="country.nameEnglish">
-              <span>{{ country.nameEnglish }}</span> |
-              <small>{{ country.nameArabic }}</small>
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-        <mat-form-field fxFlex="50%">
-          <input matInput placeholder="National ID" [formControl]="nationalIdControl" [errorStateMatcher]="matcher">
-          <mat-error *ngIf="nationalIdControl.hasError('required')">
-            National ID is
-            <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-
-      <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
-        <mat-form-field fxFlex="50%">
-          <input matInput placeholder="Referral">
-        </mat-form-field>
-        <mat-form-field fxFlex="50%">
-          <mat-select placeholder="Marketing Channel">
-            <mat-option value="Facebook">Facebook</mat-option>
-            <mat-option value="Instagram">Instagram</mat-option>
-            <mat-option value="Twitter">Twitter</mat-option>
-            <mat-option value="Friends">Friends</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
-        <mat-form-field fxFlex="100%">
-          <input matInput placeholder="Notes">
-        </mat-form-field>
-      </div>
-
-      <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
-        <mat-form-field fxFlex="30%">
-          <mat-select placeholder="Insurance Policy">
-            <mat-option value="000">Policy 1</mat-option>
-            <mat-option value="000">Policy 2</mat-option>
-            <mat-option value="000">Policy 3</mat-option>
-            <mat-option value="000">Policy 4</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field fxFlex="16%">
-          <mat-select placeholder="Category">
-            <mat-option value="A">A</mat-option>
-            <mat-option value="B">B</mat-option>
-            <mat-option value="C">C</mat-option>
-            <mat-option value="VIP">VIP</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field fxFlex="50%">
-          <input matInput placeholder="Insurance ID">
-        </mat-form-field>
-      </div>
-
-      <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" fxFill>
-        <mat-form-field fxFlex="50%">
-          <mat-select placeholder="Contracts">
-            <mat-option value="Contract 1">Contract 1</mat-option>
-            <mat-option value="Contract 2">Contract 2</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field fxFlex="50%">
-          <mat-select placeholder="Charity">
-            <mat-option value="Charity 1">Charity 1</mat-option>
-            <mat-option value="Charity 2">Charity 2</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="uploaders">
-        <div class="first" [ngClass]="(files.first && files.first[0])? 'uploaded': ''">
-          <file-drop headertext="First uploader" (onFileDrop)="dropped($event, 'first')"></file-drop>    
+      <label class="upload-button">
+        <input type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutputFirst($event)" [uploadInput]="first" multiple>
+      </label>
+      <button type="button" class="start-upload-btn" (click)="startUploadFirst()">
+        First Upload
+      </button>
+    </div>
+    <div>
+        <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutputSecond($event)" [uploadInput]="second" [ngClass]="{ 'is-drop-over': dragOver, 'dropped': filesSecond.length }">
+          <span>Second</span>
         </div>
-        <div class="second" [ngClass]="(files.second && files.second[0])? 'uploaded': ''">
-          <file-drop headertext="Second uploader" (onFileDrop)="dropped($event, 'second')"></file-drop>        
-        </div>
-      </div>
+        <label class="upload-button">
+          <input type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutputSecond($event)" [uploadInput]="second" multiple>
+        </label>
+        <button type="button" class="start-upload-btn" (click)="startUploadSecond()">
+          Second Upload
+        </button>
+    </div>
+  </div>
+  
 
-      <button mat-raised-button color="primary" class="width-100pc">Add Patient</button>
+  <button mat-raised-button color="primary" class="width-100pc">Add Patient</button>
 
-    </form>
-  <!-- </mat-card-content>
-</mat-card> -->
+</form>

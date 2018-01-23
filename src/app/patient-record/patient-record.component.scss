@@ -4,25 +4,57 @@
     >div {
         flex: 0 0 calc(50% - 20px*2);
         margin: 20px;
-        min-height: 100px;
+        display: flex;
+        flex-direction: column;
+        >* {
+            margin: 2px 0;
+        }
+        
+        .drop-container {
+            border: 3px dotted lightgray;
+            min-height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
 
-        &.uploaded {
-            background-color: greenyellow;
-            border-radius: 30px;
-            &:after {
-                content: 'UPLOADED';
-                color: white;
-                font-weight: bold;
-                font-size: 30px;
-                display: flex;
-                width: 100%;
-                height: 100%;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
+            &.is-drop-over {
+                border: none;
+                background-color: lightgreen;
+                &:after {
+                    content: 'DROP HERE';
+                    color: white;
+                    font-weight: bold;
+                    font-size: 30px;
+                    display: flex;
+                    width: 100%;
+                    height: 100%;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                }
+                >* {
+                    display: none;
+                }
             }
-            >* {
-                display: none;
+            &.dropped {
+                border: none;
+                background-color: green;
+                &:after {
+                    content: 'UPLOADED';
+                    color: white;
+                    font-weight: bold;
+                    font-size: 30px;
+                    display: flex;
+                    width: 100%;
+                    height: 100%;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                }
+                >* {
+                    display: none;
+                }
             }
         }
     }

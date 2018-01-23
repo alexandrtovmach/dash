@@ -13,7 +13,7 @@ function firebaseConnectionHandler() {
 
   // connecting request
   this.init = () => {
-    this.storage = admin.storage().bucket().get()
+    this.storage.get()
       .then(() => {
         console.log('\n============================\n=== Firebase connected ===\n============================\n')
       })
@@ -21,6 +21,8 @@ function firebaseConnectionHandler() {
         console.error('\n!!!!Firebase CONNECTION ERROR!!!!\n', errorObject.code)
       })
   }
+  
+  this.storage = admin.storage().bucket();
   
 }
 
