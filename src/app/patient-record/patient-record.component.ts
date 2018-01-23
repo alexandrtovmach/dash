@@ -109,7 +109,6 @@ export class PatientRecordComponent implements OnInit {
   }
 
   sendFile(files) {
-    console.log(files, 'sending')
     this.http.post('/api/menu/uploadFile', files['first'][0], {headers: new Headers({'Content-Type': 'multipart/form-data'})}).toPromise()
       .then(data => {
         console.log(data)

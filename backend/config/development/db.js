@@ -8,6 +8,7 @@ module.exports = {
     pass: process.env.mongo_pass,
     socketTimeoutMS: 0,
     keepAlive: true,
+    autoIndex: false,
     reconnectTries: 30
 	}
 }

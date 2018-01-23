@@ -1,0 +1,4 @@
+<input type="text" [ngModel]='model' (ngModelChange)='changed($event)'>
+<div class="patient" *ngFor="let patient of patients">
+  {{patient._id}}
+</div>

@@ -44,6 +44,7 @@ import { FileDropModule } from 'ngx-file-drop';
 
 import { AppComponent } from './app.component';
 import { PatientRecordComponent } from './patient-record/patient-record.component';
+import { PatientSearchComponent } from './patient-search/patient-search.component';
 import { routerConfig } from './router-config';
 
 export function flatpickrFactory() {
@@ -53,7 +54,8 @@ export function flatpickrFactory() {
 @NgModule({
   declarations: [
     AppComponent,
-    PatientRecordComponent
+    PatientRecordComponent,
+    PatientSearchComponent
   ],
   imports: [
     BrowserModule,

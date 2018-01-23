@@ -35,7 +35,49 @@ function findById(id, callback) {
 }
 
 function searchByKey(key, callback) {
-    const query = this.model.find({$text: {$search: key}}).limit(10);
+    const query = this.model.find(
+        { $or: 
+            [
+                {
+                    "nameEnglish" : {
+                        $regex: key,
+                        $options: 'i'
+                    }
+                },
+                {
+                    "nameArabic" : {
+                        $regex: key,
+                        $options: 'i'
+                    }
+                },
+                {
+                    "mobile" : {
+                        $regex: key,
+                        $options: 'i'
+                    }
+                },
+                {
+                    "nationalId" : {
+                        $regex: key,
+                        $options: 'i'
+                    }
+                },
+                {
+                    "address" : {
+                        $regex: key,
+                        $options: 'i'
+                    }
+                },
+                {
+                    "nameEnglish" : {
+                        $regex: key,
+                        $options: 'i'
+                    }
+                }
+            ]
+        }
+    ).limit(10);
+    // const query = this.model.find({$text: {$search: key}}).limit(10);
     query.exec(callback);
 }
 function getPatientByQuery(queryObj, callback) {

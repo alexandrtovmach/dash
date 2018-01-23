@@ -31,7 +31,6 @@ const Patient = new Schema(
     }
 );
 
-// Patient.index({nameEnglish: 'text', nameArabic: 'text', mobile: 'text', nationalId: 'text', address: 'text'});
-Patient.index({nameEnglish: 'text', nameArabic: 'text'});
+Patient.index({nameEnglish: 'text', nameArabic: 'text', mobile: 'text', nationalId: 'text', address: 'text'});
 
 module.exports = mongoose.model('patientRecords', Patient, 'patientRecords');
