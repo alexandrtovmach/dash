@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" *ngIf="isLoaded">
   <div class="left-panel" [ngClass]="{'fadeOut-animated-slow': !show, 'fadeIn-from-left': show}">
 
     <mat-form-field class="panel-item">
