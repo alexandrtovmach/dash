@@ -25,17 +25,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   diff = 0;
   filteredEvents = [];
 
-  doctors = [
-    {
-      nameEnglish: 'Dr. Ahmed Mohsen'
-    },
-    {
-      nameEnglish: 'Dr. Mohamed Hassan'
-    },
-    {
-      nameEnglish: 'Dr. Mohamed Nasr'
-    }
-  ];
+  doctors: any[];
   quarterHours = ['00', '15', '30', '45'];
   times = [];
 
@@ -45,7 +35,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.filteredDoctors = this.doctorCtrl.valueChanges
       .pipe(
         startWith(''),
-        map(doctor => doctor ? this.filterDoctors(doctor) : this.doctors.slice())
+        map(doctor => doctor ? this.filterDoctors(doctor) : this.doctors)
       );
   }
 
@@ -54,17 +44,18 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       .get(`https://xwd61qjfg4.execute-api.ap-southeast-1.amazonaws.com/dev/appointments/getByDoctor/5a913c83beb58e0001734f43`)
       .toPromise()
       .then(data => {
-        this.isLoaded = true;
         this.show = true;
         this.responseObj =  JSON.parse(data['_body']).message;
-        console.log(this.responseObj);
-      })
-      .then(() => {
         this.filteredEvents = this.responseObj;
+        this.isLoaded = true;
+
+        this.getDoctorsList(this.responseObj);
         this.timesGenerator();
         this.daysGenerator(this.baseDay);
         this.eventsGenerator(this.responseObj);
-        this.focusOnDate(this.baseDay);
+        setTimeout(() => {
+          this.focusOnDate(this.baseDay);
+        }, 0)
       })
       .catch(err => {
         console.error(err)
@@ -84,6 +75,14 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         this.times.push(time);
       }
     }
+  }
+
+  getDoctorsList(events) {
+    const cacheObj = {};
+    events.forEach(event => {
+      cacheObj[event.doctor._id] = event.doctor;
+    })
+    this.doctors = Object.keys(cacheObj).map(key => cacheObj[key]);
   }
 
   daysGenerator(base?) {
@@ -300,110 +299,110 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
 // =====================================================================================================================================
 // [  
-  {  
-     "status":"new",
-     "createdAt":"2018-03-02T11:38:43.604Z",
-     "deleted":false,
-     "_id":"5a9937c338918600013ff4b5",
-     "account":"5a7dc92a4cefed0b653f6e48",
-     "branch":"5a9937c338918600013ff4b4",
-     "doctor":{  
-        "createdAt":"2018-02-24T10:20:51.916Z",
-        "deleted":false,
-        "_id":"5a913c83beb58e0001734f43",
-        "account":"5a7dc92a4cefed0b653f6e48",
-        "branch":"5a7e14d8cef9ad0001d8a915",
-        "department":"5a868c739de0580001372f73",
-        "username":"admin2253388",
-        "password":"$2a$10$qIGNsCvPKkVcE3YsjQv9aeRxUh8z9q4lc61qpSrxB.pDZC93vSa6i",
-        "nameEnglish":"Mohamed Nasr",
-        "nameArabic":"Mohamed Nasr",
-        "gender":"female",
-        "mobile":567803080,
-        "phone":567803080,
-        "birthday":"1987-12-31T20:00:00.000Z",
-        "email":"asdsad@asd.com",
-        "nationalId":"97987897",
-        "maritalStatus":"single",
-        "address":"12213",
-        "nationality":"United Arab Emirates",
-        "role":"doctor",
-        "joinDate":"1998-12-31T20:00:00.000Z",
-        "contractType":"Full Time",
-        "policy":"5a868c739de0580001372f73",
-        "passportNumber":"A123123as",
-        "passportIssueDate":"2018-02-19T20:00:00.000Z",
-        "passportExpiryDate":"2018-02-27T20:00:00.000Z",
-        "residency":"13123",
-        "residencyIssueDate":"2018-02-04T20:00:00.000Z",
-        "residencyExpiryDate":"2018-02-27T20:00:00.000Z",
-        "labourCard":"1231313213",
-        "labourCardExpiryDate":"2018-03-08T20:00:00.000Z",
-        "rate":"200",
-        "rateType":"Per Day",
-        "rateOverTime":"400",
-        "leaveDays":"30",
-        "leaveType":"Calendar",
-        "notes":"notees",
-        "__v":0
-     },
-     "service":{  
-        "createdAt":"2018-02-28T06:14:15.836Z",
-        "deleted":false,
-        "_id":"5a9648b769e4c5000103cc13",
-        "account":"5a7dc92a4cefed0b653f6e48",
-        "code":"10001",
-        "department":"5a868c739de0580001372f73",
-        "type":"clinic",
-        "nameEnglish":"Exam",
-        "nameArabic":"Exam Arabic",
-        "rate":"400",
-        "waitingTime":"20",
-        "warningTime":"30",
-        "createdBy":"5a9648b769e4c5000103cc12",
-        "notes":"test",
-        "__v":0
-     },
-     "patientRecord":{  
-        "insurance":{  
-           "company":null,
-           "policy":null,
-           "class":null
-        },
-        "charity":null,
-        "contract":null,
-        "serviceRecords":[  
+  // {  
+  //    "status":"new",
+  //    "createdAt":"2018-03-02T11:38:43.604Z",
+  //    "deleted":false,
+  //    "_id":"5a9937c338918600013ff4b5",
+  //    "account":"5a7dc92a4cefed0b653f6e48",
+  //    "branch":"5a9937c338918600013ff4b4",
+  //    "doctor":{  
+  //       "createdAt":"2018-02-24T10:20:51.916Z",
+  //       "deleted":false,
+  //       "_id":"5a913c83beb58e0001734f43",
+  //       "account":"5a7dc92a4cefed0b653f6e48",
+  //       "branch":"5a7e14d8cef9ad0001d8a915",
+  //       "department":"5a868c739de0580001372f73",
+  //       "username":"admin2253388",
+  //       "password":"$2a$10$qIGNsCvPKkVcE3YsjQv9aeRxUh8z9q4lc61qpSrxB.pDZC93vSa6i",
+  //       "nameEnglish":"Mohamed Nasr",
+  //       "nameArabic":"Mohamed Nasr",
+  //       "gender":"female",
+  //       "mobile":567803080,
+  //       "phone":567803080,
+  //       "birthday":"1987-12-31T20:00:00.000Z",
+  //       "email":"asdsad@asd.com",
+  //       "nationalId":"97987897",
+  //       "maritalStatus":"single",
+  //       "address":"12213",
+  //       "nationality":"United Arab Emirates",
+  //       "role":"doctor",
+  //       "joinDate":"1998-12-31T20:00:00.000Z",
+  //       "contractType":"Full Time",
+  //       "policy":"5a868c739de0580001372f73",
+  //       "passportNumber":"A123123as",
+  //       "passportIssueDate":"2018-02-19T20:00:00.000Z",
+  //       "passportExpiryDate":"2018-02-27T20:00:00.000Z",
+  //       "residency":"13123",
+  //       "residencyIssueDate":"2018-02-04T20:00:00.000Z",
+  //       "residencyExpiryDate":"2018-02-27T20:00:00.000Z",
+  //       "labourCard":"1231313213",
+  //       "labourCardExpiryDate":"2018-03-08T20:00:00.000Z",
+  //       "rate":"200",
+  //       "rateType":"Per Day",
+  //       "rateOverTime":"400",
+  //       "leaveDays":"30",
+  //       "leaveType":"Calendar",
+  //       "notes":"notees",
+  //       "__v":0
+  //    },
+  //    "service":{  
+  //       "createdAt":"2018-02-28T06:14:15.836Z",
+  //       "deleted":false,
+  //       "_id":"5a9648b769e4c5000103cc13",
+  //       "account":"5a7dc92a4cefed0b653f6e48",
+  //       "code":"10001",
+  //       "department":"5a868c739de0580001372f73",
+  //       "type":"clinic",
+  //       "nameEnglish":"Exam",
+  //       "nameArabic":"Exam Arabic",
+  //       "rate":"400",
+  //       "waitingTime":"20",
+  //       "warningTime":"30",
+  //       "createdBy":"5a9648b769e4c5000103cc12",
+  //       "notes":"test",
+  //       "__v":0
+  //    },
+  //    "patientRecord":{  
+  //       "insurance":{  
+  //          "company":null,
+  //          "policy":null,
+  //          "class":null
+  //       },
+  //       "charity":null,
+  //       "contract":null,
+  //       "serviceRecords":[  
 
-        ],
-        "invoices":[  
+  //       ],
+  //       "invoices":[  
 
-        ],
-        "createdAt":"2018-02-20T18:47:14.779Z",
-        "deleted":false,
-        "_id":"5a8c6d32c54b190001997d9d",
-        "serial":"55",
-        "account":"5a7dc92a4cefed0b653f6e48",
-        "nameEnglish":"Mohamed Ibrahim Nasr",
-        "nameArabic":"Arabic Long Name",
-        "mobile":2222223,
-        "phone":33443324,
-        "birthday":"1987-12-31T20:00:00.000Z",
-        "occupation":"occ",
-        "nationalId":"9999999999",
-        "address":"any address",
-        "nationality":"Egypt",
-        "referral":"no referral",
-        "status":"new",
-        "category":"VIP",
-        "createdBy":"5a8c6d32c54b190001997d9c",
-        "notes":"New Notes",
-        "__v":0
-     },
-     "from":"2018-03-03T05:15:00.000Z",
-     "to":"2018-03-03T05:30:00.000Z",
-     "category":"Wait List",
-     "__v":0
-  },
+  //       ],
+  //       "createdAt":"2018-02-20T18:47:14.779Z",
+  //       "deleted":false,
+  //       "_id":"5a8c6d32c54b190001997d9d",
+  //       "serial":"55",
+  //       "account":"5a7dc92a4cefed0b653f6e48",
+  //       "nameEnglish":"Mohamed Ibrahim Nasr",
+  //       "nameArabic":"Arabic Long Name",
+  //       "mobile":2222223,
+  //       "phone":33443324,
+  //       "birthday":"1987-12-31T20:00:00.000Z",
+  //       "occupation":"occ",
+  //       "nationalId":"9999999999",
+  //       "address":"any address",
+  //       "nationality":"Egypt",
+  //       "referral":"no referral",
+  //       "status":"new",
+  //       "category":"VIP",
+  //       "createdBy":"5a8c6d32c54b190001997d9c",
+  //       "notes":"New Notes",
+  //       "__v":0
+  //    },
+  //    "from":"2018-03-03T05:15:00.000Z",
+  //    "to":"2018-03-03T05:30:00.000Z",
+  //    "category":"Wait List",
+  //    "__v":0
+  // },
 //   {  
 //      "status":"new",
 //      "createdAt":"2018-03-02T11:48:54.842Z",
