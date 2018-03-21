@@ -54,8 +54,8 @@
                   <span class="appointment-time" color="primary"><mat-icon>access_time</mat-icon>{{day.events[i].from | date: 'hh:mm'}} - {{day.events[i].to | date: 'hh:mm'}}
                     <mat-icon class="edit-icon">edit</mat-icon>
                   </span>
-                  <mat-icon>person</mat-icon>{{day.events[i].doctor}}
-                  <mat-icon>description</mat-icon>Notes: {{day.events[i].notes}}
+                  <mat-icon>person</mat-icon>{{day.events[i].doctor.nameEnglish}}
+                  <mat-icon>description</mat-icon>Notes: {{day.events[i].patientRecord.notes}}
                 </div>
               </div>
             </div>

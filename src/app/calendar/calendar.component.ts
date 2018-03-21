@@ -47,8 +47,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         this.show = true;
         this.responseObj =  JSON.parse(data['_body']).message;
         this.filteredEvents = this.responseObj;
-        this.isLoaded = true;
 
+        this.isLoaded = true;
         this.getDoctorsList(this.responseObj);
         this.timesGenerator();
         this.daysGenerator(this.baseDay);
@@ -121,7 +121,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       this.eventsGenerator(this.filteredEvents);
     } else {
       events.forEach(el => {
-        const from = el.from.valueOf(), to = el.to.valueOf();
+        const from = new Date(el.from).valueOf(), to =  new Date(el.to).valueOf();
         if (from >= this.days[0].dateMs && to <= this.days[this.days.length - 1].dateMs) {
           let date = new Date(new Date(from).toDateString()).valueOf(),
               fromHours = new Date(from).getHours(),
@@ -217,85 +217,85 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   
 }
 
-//   {
-//     doctor: "Dr. Ahmed Mohsen",
-//     service: "Cardio",
-//     patientRecord: "Alex",
-//     date: "10/10/1995",
-//     from: new Date(2018, 0, 18, 13),
-//     to: new Date(2018, 0, 18, 15),
-//     status: "ussual",
-//     category: "new",
-//     createdBy: "assistant",
-//     createdAt: new Date(2017, 11, 10),
-//     notes: "He is requesting an report"
-//   },
-//   {
-//     doctor: "Dr. Mohamed Nasr",
-//     service: "Cardio",
-//     patientRecord: "Mira",
-//     date: "3/5/2001",
-//     from: new Date(2018, 0, 19, 13),
-//     to: new Date(2018, 0, 19, 15),
-//     status: "ussual",
-//     category: "wait list",
-//     createdBy: "assistant",
-//     createdAt: new Date(2017, 11, 10),
-//     notes: "He want to quick review"
-//   },
-//   {
-//     doctor: "Dr. Ahmed Mohsen",
-//     service: "Cardio",
-//     patientRecord: "Mira",
-//     date: "3/5/2001",
-//     from: new Date(2018, 0, 18, 18, 30),
-//     to: new Date(2018, 0, 18, 19),
-//     status: "ussual",
-//     category: "wait list",
-//     createdBy: "assistant",
-//     createdAt: new Date(2017, 11, 10),
-//     notes: "He want to quick review"
-//   },
-//   {
-//     doctor: "Dr. Mohamed Nasr",
-//     service: "Cardio",
-//     patientRecord: "Mira",
-//     date: "3/5/2001",
-//     from: new Date(2018, 0, 19, 17),
-//     to: new Date(2018, 0, 19, 19),
-//     status: "ussual",
-//     category: "followup",
-//     createdBy: "assistant",
-//     createdAt: new Date(2017, 11, 10),
-//     notes: "He want to quick review"
-//   },
-//   {
-//     doctor: "Dr. Mohamed Nasr",
-//     service: "Cardio",
-//     patientRecord: "Mira",
-//     date: "3/5/2001",
-//     from: new Date(2018, 0, 20, 12),
-//     to: new Date(2018, 0, 20, 15),
-//     status: "ussual",
-//     category: "followup",
-//     createdBy: "assistant",
-//     createdAt: new Date(2017, 11, 10),
-//     notes: "He want to quick review"
-//   },
-//   {
-//     doctor: "Dr. Ahmed Mohsen",
-//     service: "Cardio",
-//     patientRecord: "Mira",
-//     date: "3/5/2001",
-//     from: new Date(2018, 0, 21, 12),
-//     to: new Date(2018, 0, 21, 15),
-//     status: "ussual",
-//     category: "followup",
-//     createdBy: "assistant",
-//     createdAt: new Date(2017, 11, 10),
-//     notes: "He want to quick review"
-//   }
-// ]
+const fakedObj = [{
+    doctor: "Dr. Ahmed Mohsen",
+    service: "Cardio",
+    patientRecord: "Alex",
+    date: "10/10/1995",
+    from: "2018-03-22T08:30:00.000Z",
+    to: "2018-03-22T08:45:00.000Z",
+    status: "ussual",
+    category: "new",
+    createdBy: "assistant",
+    createdAt: new Date(2017, 11, 10),
+    notes: "He is requesting an report"
+  },
+  {
+    doctor: "Dr. Mohamed Nasr",
+    service: "Cardio",
+    patientRecord: "Mira",
+    date: "3/5/2001",
+    from: new Date(2018, 2, 23, 13),
+    to: new Date(2018, 2, 23, 15),
+    status: "ussual",
+    category: "wait list",
+    createdBy: "assistant",
+    createdAt: new Date(2017, 11, 10),
+    notes: "He want to quick review"
+  },
+  {
+    doctor: "Dr. Ahmed Mohsen",
+    service: "Cardio",
+    patientRecord: "Mira",
+    date: "3/5/2001",
+    from: new Date(2018, 0, 18, 18, 30),
+    to: new Date(2018, 0, 18, 19),
+    status: "ussual",
+    category: "wait list",
+    createdBy: "assistant",
+    createdAt: new Date(2017, 11, 10),
+    notes: "He want to quick review"
+  },
+  {
+    doctor: "Dr. Mohamed Nasr",
+    service: "Cardio",
+    patientRecord: "Mira",
+    date: "3/5/2001",
+    from: new Date(2018, 0, 19, 17),
+    to: new Date(2018, 0, 19, 19),
+    status: "ussual",
+    category: "followup",
+    createdBy: "assistant",
+    createdAt: new Date(2017, 11, 10),
+    notes: "He want to quick review"
+  },
+  {
+    doctor: "Dr. Mohamed Nasr",
+    service: "Cardio",
+    patientRecord: "Mira",
+    date: "3/5/2001",
+    from: new Date(2018, 0, 20, 12),
+    to: new Date(2018, 0, 20, 15),
+    status: "ussual",
+    category: "followup",
+    createdBy: "assistant",
+    createdAt: new Date(2017, 11, 10),
+    notes: "He want to quick review"
+  },
+  {
+    doctor: "Dr. Ahmed Mohsen",
+    service: "Cardio",
+    patientRecord: "Mira",
+    date: "3/5/2001",
+    from: new Date(2018, 0, 21, 12),
+    to: new Date(2018, 0, 21, 15),
+    status: "ussual",
+    category: "followup",
+    createdBy: "assistant",
+    createdAt: new Date(2017, 11, 10),
+    notes: "He want to quick review"
+  }
+]
 
 // =====================================================================================================================================
 // [  
