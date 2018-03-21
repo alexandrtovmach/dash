@@ -46,6 +46,8 @@ import { AppComponent } from './app.component';
 import { PatientRecordComponent } from './patient-record/patient-record.component';
 import { PatientSearchComponent } from './patient-search/patient-search.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { OphthalmologyFundusViewComponent } from './fundus-view/ophthalmology-fundus-view.component';
+import { OphthalmologyFundusViewSVGComponent } from './fundus-view-svg/ophthalmology-fundus-view-svg.component';
 import { routerConfig } from './router-config';
 
 export function flatpickrFactory() {
@@ -57,7 +59,9 @@ export function flatpickrFactory() {
     AppComponent,
     PatientRecordComponent,
     PatientSearchComponent,
-    CalendarComponent
+    CalendarComponent,
+    OphthalmologyFundusViewComponent,
+    OphthalmologyFundusViewSVGComponent,
   ],
   imports: [
     BrowserModule,
