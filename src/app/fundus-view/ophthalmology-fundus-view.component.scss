@@ -1,11 +1,11 @@
 .eye-wrap {
   width: 95%;
   margin: 0 auto;
-  margin-top: -40px;
-  overflow: visible;
-  -webkit-perspective: 1000px; /* Chrome, Safari, Opera */
-  perspective: 1000px;
-  padding-left: 8.5%;
+  // margin-top: -40px;
+  // overflow: visible;
+  // -webkit-perspective: 1000px; /* Chrome, Safari, Opera */
+  // perspective: 1000px;
+  // padding-left: 8.5%;
 }
 
 
@@ -98,10 +98,6 @@ svg:not(:root) {
   opacity: 1;
 }
 
-/* .spread .fundus {
-  animation: fundus 1s ease-in-out forwards;
-  animation-delay: 1s;
-} */
 
 
 @keyframes fundus {

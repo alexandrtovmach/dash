@@ -41,6 +41,8 @@ import { NvD3Module } from 'ng2-nvd3';
 import 'd3';
 import 'nvd3';
 import { NgUploaderModule } from 'ngx-uploader';
+import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 import { AppComponent } from './app.component';
 import { PatientRecordComponent } from './patient-record/patient-record.component';
@@ -101,7 +103,9 @@ export function flatpickrFactory() {
     BrowserAnimationsModule,
     NgUploaderModule,
     HttpModule,
-    HttpClientModule
+    HttpClientModule,
+    CanvasWhiteboardModule,
+    ColorPickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

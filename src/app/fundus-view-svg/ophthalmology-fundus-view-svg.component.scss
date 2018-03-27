@@ -71,5 +71,41 @@
   fill: none;
 }
 
+.controlPanel {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 
+  label {
+    margin-right: 10px;
+  }
 
+  >div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .btn {
+    font-size: 1em;
+    &.imageFileLabel {
+      background-color: #ffd741;
+    }
+  }
+  
+  #imageFile {
+    position: absolute;
+    top: -110vw;
+    left: -110vw;
+  }
+
+  .colorPicker {
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+  }
+}

@@ -8,6 +8,7 @@ declare var $: any;
   styleUrls: ['./ophthalmology-fundus-view.component.scss'],
 })
 export class OphthalmologyFundusViewComponent implements OnInit {
+
   ngOnInit() {
     setTimeout(function() {
       $('.options-left').addClass('spread');
