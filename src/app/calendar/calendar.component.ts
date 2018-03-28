@@ -32,24 +32,25 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   constructor(private http: Http) {
     this.doctorCtrl = new FormControl();
-    this.filteredDoctors = this.doctorCtrl.valueChanges
-      .pipe(
-        startWith(''),
-        map(doctor => doctor ? this.filterDoctors(doctor) : this.doctors)
-      );
   }
 
   ngOnInit() {
-    this.http
-      .get(`https://xwd61qjfg4.execute-api.ap-southeast-1.amazonaws.com/dev/appointments/getByDoctor/5a913c83beb58e0001734f43`)
-      .toPromise()
+    this.getDoctors()
+      .then((doctors) => {
+        this.doctors = JSON.parse(doctors['_body']).message;
+        this.filteredDoctors = this.doctorCtrl.valueChanges
+          .pipe(
+            startWith(''),
+            map(doctor => doctor ? this.filterDoctors(doctor) : this.doctors)
+          );
+      });
+    this.getEvents()
       .then(data => {
         this.show = true;
         this.responseObj =  JSON.parse(data['_body']).message;
         this.filteredEvents = this.responseObj;
 
         this.isLoaded = true;
-        this.getDoctorsList(this.responseObj);
         this.timesGenerator();
         this.daysGenerator(this.baseDay);
         this.eventsGenerator(this.responseObj);
@@ -60,6 +61,19 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       .catch(err => {
         console.error(err)
       })
+      // 
+  }
+
+  getEvents() {
+    return this.http
+      .get(`https://xwd61qjfg4.execute-api.ap-southeast-1.amazonaws.com/dev/appointments/getByDoctor/5a913c83beb58e0001734f43`)
+      .toPromise()
+  }
+
+  getDoctors() {
+    return this.http
+      .get(`https://gaoshdshe6.execute-api.ap-southeast-1.amazonaws.com/dev/users/getByRole/5a7dc92a4cefed0b653f6e48/doctor`)
+      .toPromise()
   }
 
   ngAfterViewInit() {
@@ -77,13 +91,13 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getDoctorsList(events) {
-    const cacheObj = {};
-    events.forEach(event => {
-      cacheObj[event.doctor._id] = event.doctor;
-    })
-    this.doctors = Object.keys(cacheObj).map(key => cacheObj[key]);
-  }
+  // getDoctorsList(events) {
+  //   const cacheObj = {};
+  //   events.forEach(event => {
+  //     cacheObj[event.doctor._id] = event.doctor;
+  //   })
+  //   this.doctors = Object.keys(cacheObj).map(key => cacheObj[key]);
+  // }
 
   daysGenerator(base?) {
     this.days = [];
@@ -203,6 +217,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   scrollCalendar(side) {
+    console.log(this.filteredEvents);
     this.diff += side;
     this.daysContainer.nativeElement.style.transform = `translateX(${parseFloat(this.daysContainer.nativeElement.style.transform.split('(')[1]) + (201 * side)}px)`;
     if (this.position - this.diff > this.days.length - 5 || this.position - this.diff < 5) {

@@ -23,7 +23,7 @@
       <mat-form-field class="panel-item">
         <input matInput placeholder="Select Doctor" aria-label="Doctor" [matAutocomplete]="auto" [formControl]="doctorCtrl">
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="pickDoctor()">
-          <mat-option *ngFor="let doctor of filteredDoctors | async" [value]="doctor.nameEnglish">
+          <mat-option *ngFor="let doctor of filteredDoctors | async" [value]="doctor._id">
             <span>{{ doctor.nameEnglish }}</span>
           </mat-option>
         </mat-autocomplete>
